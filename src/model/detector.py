@@ -34,24 +34,30 @@ from typing import Optional
 
 DEFAULT_PARAMS: dict = {
     "objective": "binary",
-    "metric": ["binary_logloss", "auc"],
+    # AUC is used for both training signal and early stopping.  Using logloss
+    # with scale_pos_weight can saturate in the first few trees; AUC gives a
+    # more stable gradient on imbalanced data.
+    "metric": "auc",
     "boosting_type": "gbdt",
-    "num_leaves": 63,
-    "max_depth": -1,
+    "num_leaves": 31,
+    "max_depth": 5,
     "learning_rate": 0.05,
-    "n_estimators": 500,
+    "n_estimators": 400,
     "subsample": 0.8,
     "subsample_freq": 1,
     "colsample_bytree": 0.8,
     "min_child_samples": 20,
     "reg_alpha": 0.1,
-    "reg_lambda": 0.1,
+    "reg_lambda": 1.0,
+    # Moderate positive-class weight.  A high weight (>> 10) saturates the AUC
+    # on the first tree and triggers premature early stopping.
+    "scale_pos_weight": 5.0,
     "random_state": 42,
     "n_jobs": -1,
     "verbose": -1,
 }
 
-EARLY_STOPPING_ROUNDS = 30
+EARLY_STOPPING_ROUNDS = 80
 
 
 # ---------------------------------------------------------------------------
@@ -100,15 +106,7 @@ class IncidentDetector:
         -------
         self
         """
-        # Class-imbalance weight: ratio of negatives to positives
-        n_pos = int(y_train.sum())
-        n_neg = len(y_train) - n_pos
-        scale_pos_weight = n_neg / max(n_pos, 1)
-
-        model_params = {
-            **self.params,
-            "scale_pos_weight": scale_pos_weight,
-        }
+        model_params = {**self.params}
 
         self._model = lgb.LGBMClassifier(**model_params)
         self._feature_names = list(X_train.columns)
