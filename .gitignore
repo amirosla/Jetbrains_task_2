@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Model artifacts (large binaries)
+models/*.joblib
+models/*.pkl
+models/*.bin
+*.joblib
+*.pkl
+
+# Results (generated at runtime)
+results/*.png
+results/*.json
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# AWS / Terraform
+.terraform/
+*.tfstate
+*.tfstate.backup
+.env
+*.pem
+
+# Logs
+*.log
+logs/
