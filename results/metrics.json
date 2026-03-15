@@ -1,0 +1,38 @@
+{
+  "scalar": {
+    "auc_roc": 0.7685484799631508,
+    "auc_pr": 0.3646993297845239,
+    "f1": 0.40703517587939697,
+    "precision": 0.39901477832512317,
+    "recall": 0.4153846153846154,
+    "fpr": 0.04565868263473054,
+    "threshold": 0.09864321608040201,
+    "n_samples": 2867,
+    "n_positive": 195,
+    "tn": 2550,
+    "fp": 122,
+    "fn": 114,
+    "tp": 81
+  },
+  "incident_level": {
+    "incident_recall": 0.4,
+    "caught": 2,
+    "missed": 3,
+    "total_incidents": 5,
+    "mean_lead_time": 8.0,
+    "median_lead_time": 8.0,
+    "lead_times": [
+      10.0,
+      6.0
+    ]
+  },
+  "W": 60,
+  "H": 10,
+  "n_steps": 14400,
+  "seed": 42,
+  "cv_folds": 5,
+  "baseline": {
+    "auc_roc": 0.6834945493628126,
+    "auc_pr": 0.1253029931984419
+  }
+}
